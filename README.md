@@ -1,73 +1,209 @@
-# Welcome to your Lovable project
 
-## Project info
+# dCDN - Decentralized Content Delivery Network
 
-**URL**: https://lovable.dev/projects/e22012c0-ceb4-4a60-8c04-058cafc00d77
+A modern, decentralized content delivery network built on the Internet Computer Protocol (ICP) using React frontend and Rust backend.
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+- **Decentralized Storage**: Files are distributed across multiple nodes for redundancy
+- **Global CDN**: Worldwide network of nodes for fast content delivery
+- **Privacy Controls**: Public and private file sharing options
+- **Real-time Analytics**: Monitor network performance and usage statistics
+- **Peer-to-Peer Network**: Direct node-to-node content distribution
+- **Censorship Resistant**: Decentralized architecture prevents single points of failure
 
-**Use Lovable**
+## 📋 Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e22012c0-ceb4-4a60-8c04-058cafc00d77) and start prompting.
+Before you begin, ensure you have the following installed:
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Node.js and npm**
+   ```bash
+   # Download from https://nodejs.org/
+   node --version  # Should be v16 or higher
+   npm --version
+   ```
 
-**Use your preferred IDE**
+2. **Rust and Cargo**
+   ```bash
+   # Install from https://rustup.rs/
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   rustc --version
+   cargo --version
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **DFINITY SDK**
+   ```bash
+   sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+   dfx --version
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Installation & Setup
 
-Follow these steps:
+1. **Clone or download this project**
+   ```bash
+   # If you have git:
+   git clone <repository-url>
+   cd dcdn
+   
+   # Or extract the downloaded files and navigate to the directory
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. **Install frontend dependencies**
+   ```bash
+   npm install
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. **Add required dependencies for ICP integration**
+   ```bash
+   npm install @dfinity/agent @dfinity/candid @dfinity/principal
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🚀 Local Development
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. **Start the local development environment**
+   ```bash
+   # Start the frontend development server
+   npm run dev
+   ```
+
+2. **Deploy to local ICP replica** (in a new terminal)
+   ```bash
+   # Make the deploy script executable
+   chmod +x deploy.sh
+   
+   # Run the deployment script
+   ./deploy.sh
+   ```
+
+The script will:
+- Start a local ICP replica
+- Deploy the Rust backend canister
+- Build and deploy the React frontend
+- Provide you with local URLs to access your dCDN
+
+## 🌍 Deploy to Mainnet
+
+1. **Get cycles for deployment**
+   - Visit https://faucet.dfinity.org/ to get free cycles for testing
+   - Or purchase cycles for production deployment
+
+2. **Deploy to Internet Computer mainnet**
+   ```bash
+   # Make the mainnet deploy script executable
+   chmod +x deploy-mainnet.sh
+   
+   # Deploy to mainnet
+   ./deploy-mainnet.sh
+   ```
+
+## 📁 Project Structure
+
+```
+dcdn/
+├── src/
+│   ├── components/           # React components
+│   │   ├── UploadSection.tsx # File upload interface
+│   │   ├── FileList.tsx      # File management
+│   │   ├── NetworkStats.tsx  # Network statistics
+│   │   └── PeerNodes.tsx     # Node management
+│   ├── pages/
+│   │   └── Index.tsx         # Main application page
+│   └── dcdn_backend/         # Rust backend
+│       ├── src/lib.rs        # Main backend logic
+│       └── Cargo.toml        # Rust dependencies
+├── dfx.json                  # ICP configuration
+├── deploy.sh                 # Local deployment script
+├── deploy-mainnet.sh         # Mainnet deployment script
+└── README.md                 # This file
 ```
 
-**Edit a file directly in GitHub**
+## 🔧 Usage
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Uploading Files
+1. Navigate to the "Upload Files" tab
+2. Drag and drop files or click to browse
+3. Choose privacy settings (public/private)
+4. Click "Upload to Network"
 
-**Use GitHub Codespaces**
+### Managing Files
+1. View uploaded files in the "My Files" tab
+2. Download, share, or delete files as needed
+3. Copy shareable links for public files
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Monitoring Network
+1. Check network statistics in the "Network Stats" tab
+2. Monitor peer nodes in the "Peer Nodes" tab
+3. View real-time performance metrics
 
-## What technologies are used for this project?
+## 🔒 Security Features
 
-This project is built with:
+- **Cryptographic Hashing**: All files are identified by secure hashes
+- **Access Control**: Private files are only accessible by owners
+- **Decentralized Verification**: Network consensus for file integrity
+- **Immutable Storage**: Files cannot be modified once uploaded
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🌐 Network Architecture
 
-## How can I deploy this project?
+The dCDN operates on a peer-to-peer network where:
+- Multiple nodes store file replicas for redundancy
+- Closest nodes serve content for optimal performance
+- Automatic failover ensures high availability
+- Load balancing distributes traffic efficiently
 
-Simply open [Lovable](https://lovable.dev/projects/e22012c0-ceb4-4a60-8c04-058cafc00d77) and click on Share -> Publish.
+## 📊 Monitoring & Analytics
 
-## Can I connect a custom domain to my Lovable project?
+Track important metrics:
+- **Upload/Download Statistics**: Monitor data transfer rates
+- **Node Performance**: Track uptime and response times
+- **Storage Utilization**: View network-wide storage usage
+- **User Activity**: Analyze usage patterns
 
-Yes, you can!
+## 🚨 Troubleshooting
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Common Issues
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. **"dfx not found" error**
+   ```bash
+   # Reinstall DFINITY SDK
+   sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+   ```
+
+2. **Build failures**
+   ```bash
+   # Clean and rebuild
+   dfx stop
+   dfx start --clean --background
+   ./deploy.sh
+   ```
+
+3. **Frontend not loading**
+   ```bash
+   # Rebuild frontend
+   npm run build
+   dfx deploy dcdn_frontend
+   ```
+
+4. **Cycles balance issues**
+   - Visit https://faucet.dfinity.org/ for test cycles
+   - Check balance: `dfx wallet --network ic balance`
+
+## 📚 Additional Resources
+
+- [Internet Computer Documentation](https://internetcomputer.org/docs/)
+- [DFINITY SDK Guide](https://sdk.dfinity.org/docs/)
+- [Rust Canister Development](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)
+- [React on ICP](https://internetcomputer.org/docs/current/developer-docs/frontend/)
+
+## 🤝 Contributing
+
+This is an open-source project. Contributions are welcome!
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+**Happy building your decentralized CDN! 🎉**
+
+For questions or support, refer to the Internet Computer community forums or documentation.

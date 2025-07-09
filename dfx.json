@@ -1,0 +1,25 @@
+
+{
+  "version": 1,
+  "canisters": {
+    "dcdn_backend": {
+      "type": "rust",
+      "package": "dcdn_backend"
+    },
+    "dcdn_frontend": {
+      "type": "assets",
+      "source": ["dist/"],
+      "dependencies": ["dcdn_backend"]
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:4943",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": ["https://ic0.app"],
+      "type": "persistent"
+    }
+  }
+}

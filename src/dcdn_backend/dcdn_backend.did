@@ -1,0 +1,47 @@
+
+type FileMetadata = record {
+  id : text;
+  name : text;
+  size : nat64;
+  content_type : text;
+  upload_time : nat64;
+  owner : principal;
+  download_count : nat64;
+  replica_count : nat8;
+  is_public : bool;
+};
+
+type UploadRequest = record {
+  name : text;
+  content_type : text;
+  data : vec nat8;
+  is_public : bool;
+};
+
+type NodeInfo = record {
+  id : text;
+  location : text;
+  storage_capacity : nat64;
+  used_storage : nat64;
+  uptime_percentage : float64;
+  last_seen : nat64;
+  node_type : text;
+};
+
+type Result = variant { Ok : text; Err : text };
+type Result_1 = variant { Ok : FileMetadata; Err : text };
+type Result_2 = variant { Ok : vec nat8; Err : text };
+type Result_3 = variant { Ok; Err : text };
+
+service : {
+  upload_file : (UploadRequest) -> (Result);
+  get_file_metadata : (text) -> (Result_1) query;
+  download_file : (text) -> (Result_2) query;
+  list_user_files : () -> (vec FileMetadata) query;
+  list_public_files : () -> (vec FileMetadata) query;
+  delete_file : (text) -> (Result_3);
+  register_node : (NodeInfo) -> (Result_3);
+  get_network_stats : () -> (vec record { text; nat64 }) query;
+  list_nodes : () -> (vec NodeInfo) query;
+  update_node_heartbeat : (text) -> (Result_3);
+}
