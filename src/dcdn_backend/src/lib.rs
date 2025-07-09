@@ -28,14 +28,6 @@ pub struct UploadRequest {
     pub is_public: bool,
 }
 
-#[derive(Clone, Debug, CandidType, Deserialize)]
-pub struct FileChunk {
-    pub file_id: String,
-    pub chunk_index: u32,
-    pub data: Vec<u8>,
-    pub total_chunks: u32,
-}
-
 #[derive(Clone, Debug, CandidType, Deserialize, Serialize)]
 pub struct NodeInfo {
     pub id: String,
@@ -214,8 +206,8 @@ pub fn register_node(info: NodeInfo) -> Result<(), String> {
 }
 
 #[query]
-pub fn get_network_stats() -> HashMap<String, u64> {
-    let mut stats = HashMap::new();
+pub fn get_network_stats() -> Vec<(String, u64)> {
+    let mut stats = Vec::new();
 
     let total_files = FILES.with(|files| files.borrow().len() as u64);
     let total_storage = FILES.with(|files| {
@@ -226,10 +218,10 @@ pub fn get_network_stats() -> HashMap<String, u64> {
     });
     let active_nodes = NODES.with(|nodes| nodes.borrow().len() as u64);
 
-    stats.insert("total_files".to_string(), total_files);
-    stats.insert("total_storage".to_string(), total_storage);
-    stats.insert("total_downloads".to_string(), total_downloads);
-    stats.insert("active_nodes".to_string(), active_nodes);
+    stats.push(("total_files".to_string(), total_files));
+    stats.push(("total_storage".to_string(), total_storage));
+    stats.push(("total_downloads".to_string(), total_downloads));
+    stats.push(("active_nodes".to_string(), active_nodes));
 
     stats
 }
@@ -256,5 +248,5 @@ pub fn update_node_heartbeat(node_id: String) -> Result<(), String> {
     })
 }
 
-// Export the candid interface
+// Export the candid interface - this is critical for generating the .did file
 ic_cdk::export_candid!();

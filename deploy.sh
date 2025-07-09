@@ -16,21 +16,50 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
-# Start dfx in the background
+# Stop any existing dfx processes
+echo "🛑 Stopping any existing dfx processes..."
+dfx stop
+
+# Start dfx in the background with clean state
 echo "🔧 Starting local dfx replica..."
 dfx start --background --clean
 
-# Deploy the backend canister
+# Wait a moment for dfx to fully start
+sleep 5
+
+# Install frontend dependencies
+echo "📦 Installing frontend dependencies..."
+npm install
+
+# Deploy the backend canister first
 echo "📦 Deploying backend canister..."
 dfx deploy dcdn_backend
+
+# Check if backend deployment was successful
+if [ $? -ne 0 ]; then
+    echo "❌ Backend deployment failed. Check the error messages above."
+    exit 1
+fi
 
 # Build the frontend
 echo "🏗️ Building frontend..."
 npm run build
 
+# Check if frontend build was successful
+if [ $? -ne 0 ]; then
+    echo "❌ Frontend build failed. Check the error messages above."
+    exit 1
+fi
+
 # Deploy the frontend canister
 echo "🌐 Deploying frontend canister..."
 dfx deploy dcdn_frontend
+
+# Check if frontend deployment was successful
+if [ $? -ne 0 ]; then
+    echo "❌ Frontend deployment failed. Check the error messages above."
+    exit 1
+fi
 
 # Get canister URLs
 echo "✅ Deployment successful!"
