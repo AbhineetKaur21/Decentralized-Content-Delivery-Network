@@ -207,3 +207,4 @@ This project is licensed under the MIT License.
 **Happy building your decentralized CDN! 🎉**
 
 For questions or support, refer to the Internet Computer community forums or documentation.
+# icp-web3-delivery-1
